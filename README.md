@@ -3,6 +3,7 @@ MicRooN
 
 A two-step machine based classifier model – miRSEQ and miRINT, which will identify a miR to be associated with cancer and also classify its association, i.e., either with an oncogene or a tumour suppressor.
 
+
 PREREQUISITE:
 1. LibSVM 3.7
 2. Python 2.6 or later
@@ -11,6 +12,15 @@ PREREQUISITE:
 
 * Linux Based Installation
 To use miRSEQ and miRINT, the user needs the following file:
+
+The classifier is designed to identify the asssociation of miR based with "miRSEQ.model" and then the output of the model which is a prediction saying either its associated with cancer or not. If the miR predicted is associated with cancer. Then run RNAhybrid with the "ONCOGENE.fasta" or "TSG.fasta". 
+
+The result obtained from the RNAhybrid is fed as input into the "PAIRFINDER" - a perl script to calculate various features for the obtained miR:mRNA interaction.
+
+********* 
+Convert the file to libsvm format and depending on the number of seed formed during the miR:mRNA interaction the respective model for prediction is choosen.
+
+
 
 1. Test dataset – Prepared from the features extracted from the sequence and from
 hybridized structures for miRSEQ and miRINT respectively.
