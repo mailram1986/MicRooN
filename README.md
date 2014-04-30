@@ -60,15 +60,14 @@ MFEI2	dG/n_Stems
 MFEI3	dG/n_Loops		
 MFEI4	MFE/Total Bases		
 fe/gcc	MFE/GC content		
-	Normalized Parameter for classification		
+
+Normalized Parameter for classification		
 dG	MFE/L	Removes the bias that long sequences have low MFE	
 dP	Tot_bases/L	Normalized Base Pairing Propensity  target sequence.	
 dQ	-(P-value.log2(P-value))/L	Base Pairing Probability also denoted as Pij. Usually calculated as matrix from RNApfold algorithm. Here we used hybridized structure with known	
 dD	(P-value - (P-value)^2)/L	Normalized base pairing distance	
+
 ZG	Normalized Data since random sequence has been generated and its relationship with the stacked base pairs which is very important in the calculation of MFE	Has to be calculated generating 1000 sequence in Random	
 ZP,ZQ,ZD,
 Z- score	
 formula = mfe - (mean- mfe )/(std deviation)	Binding free energy (Prob Score)	A score to compare the two dataset.
-
-
-                                                    **********
