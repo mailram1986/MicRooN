@@ -39,21 +39,22 @@ Prediction from model file:     1 means "Oncogenic"
                                 2 means "Tumour suppressor genes"
                                 
 ### Features to calculate for miRINT:
-### Base Pair Composition - Sequence Features													
+#### Base Pair Composition - Sequence Features													
 %AG,%AU,%CA,%CC,%CG,%CU,%GA,%GC,%GG,%GU,%UA,%UC,%UG,%UU
 
-### Base Pair Composition Per Length of the miRNA - structural Features			
+#### Base Pair Composition Per Length of the miRNA - structural Features			
 |A-U|/L,|G-C|/L,|G-U|/L	
 where L is set to be 22 nt for  the classifier( In some cases it varies till 24 so mirna length is considered here for the parameter(Considering only actual length)		
 
-### Avg_Bp_Stem - Analyzing average base pairs in the stem - Gives idea what base pairing predominates.These features were calculated both for seed and out seed regions	
+#### Avg_Bp_Stem 
+Analyzing average base pairs in the stem - Gives idea what base pairing predominates.These features were calculated both for seed and out seed regions	
 
 %(A-U)/stems,%(G-C)/stems,%(G-U)/stems
 of buldges miRNA mRNA hybridized structure forms loops or buldges frequently, analyzing how often they form buldges is a unique feature		
 
 UP bases - Unpaired bases
 
-### Thermodynamic Features: 
+#### Thermodynamic Features: 
 Calculated only from the hybridized structures since we are interested in classifying the mirna based on their hybridzation profile			
 MFEI1	dG/%(C+G)		
 MFEI2	dG/n_Stems		
@@ -61,10 +62,10 @@ MFEI3	dG/n_Loops
 MFEI4	MFE/Total Bases		
 fe/gcc	MFE/GC content		
 
-### Normalized Parameter for classification		
+#### Normalized Parameter for classification		
 dG	MFE/L	Removes the bias that long sequences have low MFE	
 dP	Tot_bases/L	Normalized Base Pairing Propensity  target sequence.	
-dQ	-(P-value.log2(P-value))/L	Base Pairing Probability also denoted as Pij. Usually calculated as matrix from RNApfold algorithm. Here we used hybridized structure with known	
+dQ	-(P-value.log2(P-value))/L	Base Pairing Probability also denoted as Pij. Usually calculated as matrix from RNApfold algorithm. Here we used hybridized structure with known
 dD	(P-value - (P-value)^2)/L	Normalized base pairing distance	
 
 ZG, ZP,ZQ,ZD 
