@@ -23,7 +23,7 @@ Class   P1  P2  P3  P4  P5  P6  P7  P8  P9  P10 P11 P12 P13 P14 P15 P16 P17 P18 
 
 Where first column indicates the class 1 (Positive)or 2 (negative), followed by the miR and its 2w information.Before the actual training process all nucleotide where converted to number since strings can't be used for training. So we converted A as 1, U as 2, G as 3 and C as 4 and then followed by the 2w size. The last row indicates the actual training set used in LibSVM. Note: For LibSVM the corresponding csv file will be converted to libsvm ,(refer: csv2libsvm.py inlibSVM package). 
 
-### syntax: svm-predict [options] test_file model_file output_file
+> syntax: svm-predict [options] test_file model_file output_file
 
 Prediction from model file :    1 means "Associated with cancer"
                                 2 means "Not associated with cancer"
