@@ -13,7 +13,7 @@ PREREQUISITE:
 * Linux Based Installation
 To use miRSEQ and miRINT, the user needs the following file:
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 FOR MIRSEQ:
 1. Create input file for Libsvm
 Let us consider a miR sequence with a Length (L) = 22 , and each let each nucleotide position be named as P1, P2, .... ,PL.  A sliding window size of 2W is considered as the best feature for the sequence. Then the final Training instance will be :
@@ -28,7 +28,7 @@ syntax:svm-predict [options] test_file model_file output_file
 
 Prediction from model file :    1 means "Associated with cancer"
                                 2 means "Not associated with cancer"
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 FOR MIRINT:
 
 1. miR mature sequence in FASTA format
@@ -41,15 +41,18 @@ Prediction from model file:     1 means "Oncogenic"
                                 
 Features to calculate for miRINT:
 Base Pair Composition - Sequence Features													
-%AG	%AU	%CA	%CC	%CG	%CU	%GA	%GC	%GG	%GU	%UA	%UC	%UG	%UU
+%AG,%AU,%CA,%CC,%CG,%CU,%GA,%GC,%GG,%GU,%UA,%UC,%UG,%UU
 
 Base Pair Composition Per Length of the miRNA - structural Features			
-|A-U|/L	|G-C|/L	|G-U|/L	
-	*- L is set to be 22 nt for  the classifier( In some cases it varies till 24 so mirna length is considered here for the parameter(Considering only actual length)		
+|A-U|/L,|G-C|/L,|G-U|/L	
+*- L is set to be 22 nt for  the classifier( In some cases it varies till 24 so mirna length is considered here for the parameter(Considering only actual length)		
+
 Avg_Bp_Stem - Analyzing average base pairs in the stem - Gives idea what base pairing predominates		* These features were calculated both for seed and out seed regions	
-	%(A-U)/stems	%(G-C)/stems	%(G-U)/stems
+
+%(A-U)/stems,%(G-C)/stems,%(G-U)/stems
 # of buldges	miRNA:mRNA hybridized structure forms loops or buldges frequently, analyzing how often they form buldges is a unique feature		
-UP bases	
+
+UP bases - Unpaired bases
 
 Thermodynamic Features: Calculated only from the hybridized structures since we are interested in classifying the mirna based on their hybridzation profile			
 MFEI1	dG/%(C+G)		
