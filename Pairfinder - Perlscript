@@ -1,0 +1,192 @@
+# Program to parse seed and outseed region from RNAhyybrid Result
+# Author : Ram K, Malvika S, Vista Lab, Proteomics Lab, BITS PILANI KK BIRLA GOA CAMPUS
+
+print "Enter file name";
+
+
+#### Takes filename to be read and parsed
+chomp ($file=<STDIN>);
+open (FD, $file);
+@contents=<FD>;
+close FD;
+
+#####change value for line no to 1 if you want it to be printed to the file
+$lno1=1;
+$lno2=1;
+$lno3=1;
+$lno4=1;
+
+##### Create output file
+$filename=$file;
+$filename=~s/txt$/xls/;
+open (HD,">$filename");
+print HD "\t\t\t\t\t\t\tSeed 1\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tSeed 2\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tSeed 3\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tSeed 4\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tSeed 5\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tSeed 6\n";
+print HD "Target\tGene length\tmiRNA\tmiRNA length\tmfe\tp-value\tposition\tAA\tAU\tAG\tAC\tUA\tUU\tUG\tUC\tGA\tGU\tGG\tGC\tCA\tCU\tCG\tCC\tGap in mRNA\tGap in miRNA\tAA\tAU\tAG\tAC\tUA\tUU\tUG\tUC\tGA\tGU\tGG\tGC\tCA\tCU\tCG\tCC\tGap in mRNA\tGap in miRNA\tAA\tAU\tAG\tAC\tUA\tUU\tUG\tUC\tGA\tGU\tGG\tGC\tCA\tCU\tCG\tCC\tGap in mRNA\tGap in miRNA\tAA\tAU\tAG\tAC\tUA\tUU\tUG\tUC\tGA\tGU\tGG\tGC\tCA\tCU\tCG\tCC\tGap in mRNA\tGap in miRNA\tAA\tAU\tAG\tAC\tUA\tUU\tUG\tUC\tGA\tGU\tGG\tGC\tCA\tCU\tCG\tCC\tGap in mRNA\tGap in miRNA\tAA\tAU\tAG\tAC\tUA\tUU\tUG\tUC\tGA\tGU\tGG\tGC\tCA\tCU\tCG\tCC\tGap in mRNA\tGap in miRNA\n";
+
+#####initialise count
+$AA=0;
+$AU=0;
+$AG=0;
+$AC=0;
+$UA=0;
+$UU=0;
+$UG=0;
+$UC=0;
+$GA=0;
+$GU=0;
+$GG=0;
+$GC=0;
+$CA=0;
+$CU=0;
+$CG=0;
+$CC=0;
+$GapmRNA=0;
+$GapmiRNA=0;
+@range=();
+
+#### Reads each line of the file and parses it
+foreach $line(@contents)
+     {
+     if ($line=~/\$target\:\s(.*)/)
+          {
+          $targetname=$1;
+          $t1=1;
+          chomp($targetname);
+          }
+     elsif ($line=~/length\:\s(.*)/)
+          {
+          if ($t1==1)
+               {
+               $genelength=$1;
+               chomp($genelength);
+               $t1=0;
+               }
+          elsif ($m1==1)
+               {
+               $mirnalength=$1;
+               chomp($mirnalength);
+               $m1=0;
+               }
+          }
+     elsif ($line=~/miRNA\s\:\s(.*)/)
+          {
+          $m1=1;
+          $miRNA=$1;
+          chomp($miRNA);
+          }
+     elsif ($line=~/mfe\:\s(.*)/)
+          {
+          $mfe=$1;
+          chomp($mfe);
+          }
+     elsif ($line=~/p\-value\:\s(.*)/)
+          {
+          $pvalue=$1;
+          chomp($pvalue);
+          }
+     elsif ($line=~/^position\:\s(.*)/)
+          {
+          $position=$1;
+          chomp($position)
+          }
+     elsif ($line=~/^target\s5'\s/)
+          {
+#print "target";
+          $target=1;
+          $targetnonseed=$line;
+          $targetnonseed=~s/^target\s5'\s//;
+          $targetnonseed=~s/\s3'//;
+#          if ($lno1==1)
+#               {print HD $targetnonseed;}
+          }
+     elsif ($line=~/^miRNA\s\s3'\s/)
+          {
+#print "mirna";
+          $mirnanonseed=$line;
+          $mirnanonseed=~s/^miRNA\s\s3'\s//;
+          $mirnanonseed=~s/\s5'//;
+#          if ($lno4==1)
+#               {print HD $mirnanonseed;}
+         
+####### Creating arrays
+          @targets=split('',$targetseed);
+          @targetns=split('',$targetnonseed);
+          @mirnas=split('',$mirnaseed);
+          @mirnans=split('',$mirnanonseed);
+         
+###### calculating length
+          $totallen=length($targetseed);
+         
+###### creating line to be printed
+          $printline="$targetname\t$genelength\t$miRNA\t$mirnalength\t$mfe\t$pvalue\t$position\t";
+
+#######Count the bases
+          $i=0;
+          while($targetseed=~/\s*([AUGC]{4,})\s*/g)
+               {
+               $len=length($1);
+               $start=(index($targetseed,$1));
+               $end=$start + $len -1;
+               $range[$i][0]=$start;
+               $range[$i][1]=$end;
+              
+                         for ($j=$start;$j<=$end;$j++)
+                              {
+                                   if ($targets[$j] eq 'A' && $mirnas[$j] eq 'U')
+                                        {$AU++;}
+                                   if ($targets[$j] eq 'U' && $mirnas[$j] eq 'A')
+                                        {$UA++;}
+                                   if ($targets[$j] eq 'U' && $mirnas[$j] eq 'G')
+                                        {$UG++;}
+                                   if ($targets[$j] eq 'G' && $mirnas[$j] eq 'U')
+                                        {$GU++;}
+                                   if ($targets[$j] eq 'G' && $mirnas[$j] eq 'C')
+                                        {$GC++;}
+                                   if ($targets[$j] eq 'C' && $mirnas[$j] eq 'G')
+                                        {$CG++;}
+                              }
+                    $printline=$printline."$AA\t$AU\t$AG\t$AC\t$UA\t$UU\t$UG\t$UC\t$GA\t$GU\t$GG\t$GC\t$CA\t$CU\t$CG\t$CC\t$GapmRNA\t$GapmiRNA\t";
+                    $AA=0;
+                    $AU=0;
+                    $AG=0;
+                    $AC=0;
+                    $UA=0;
+                    $UU=0;
+                    $UG=0;
+                    $UC=0;
+                    $GA=0;
+                    $GU=0;
+                    $GG=0;
+                    $GC=0;
+                    $CA=0;
+                    $CU=0;
+                    $CG=0;
+                    $CC=0;
+                    $GapmRNA=0;
+                    $GapmiRNA=0;
+                   
+               $i++;
+               }
+          print HD "$printline\n";
+          }
+     elsif ($line=~/\s{10,}/)
+          {
+          if ($target==1)
+               {
+               $targetseed=substr($line,10);
+               $targetseed=~s/\s{3}$//;
+               $target=0;
+#               if ($lno2==1)
+#                    {print HD $targetseed;}
+               }
+          else
+               {
+               $mirnaseed=substr($line,10);
+               $mirnaseed=~s/\s{3}$//;
+#               if ($lno3==1)
+#                    {print HD $mirnaseed;}
+               }
+          }
+     }
+close HD;    
+     
