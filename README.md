@@ -28,7 +28,7 @@ Where first column indicates the class 1 (Positive)or 2 (negative), followed by 
 Prediction from model file :    1 means "Associated with cancer"
                                 2 means "Not associated with cancer"
 
-FOR MIRINT:
+### FOR MIRINT:
 
 1. miR mature sequence in FASTA format
 2. RNAHYBRID Result which is the input for PairFinder script.
