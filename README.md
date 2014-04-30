@@ -50,7 +50,7 @@ Base Pair Composition Per Length of the miRNA - structural Features
 Avg_Bp_Stem - Analyzing average base pairs in the stem - Gives idea what base pairing predominates		* These features were calculated both for seed and out seed regions	
 
 %(A-U)/stems,%(G-C)/stems,%(G-U)/stems
-# of buldges	miRNA:mRNA hybridized structure forms loops or buldges frequently, analyzing how often they form buldges is a unique feature		
+of buldges miRNA:mRNA hybridized structure forms loops or buldges frequently, analyzing how often they form buldges is a unique feature		
 
 UP bases - Unpaired bases
 
