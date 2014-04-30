@@ -17,9 +17,9 @@ To use miRSEQ and miRINT, the user needs the following file:
 1. Create input file for Libsvm
 Let us consider a miR sequence with a Length (L) = 22 , and each let each nucleotide position be named as P1, P2, .... ,PL.  A sliding window size of 2W is considered as the best feature for the sequence. Then the final Training instance will be :
 
-Class   P1  P2  P3  P4  P5  P6  P7  P8  P9  P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 AA  UU  GG  CC
-1/2     A   U   A   U   G   G   A   A   U   U   G   G   C   C   U   U   A   A   U   C   A   G   2   2   1   1
-1/2     1   2   1   2   3   3   1   1   2   2   3   3   4   4   2   2   1   1   2   4   1   3   2   2   1   1
+##### Class   P1  P2  P3  P4  P5  P6  P7  P8  P9  P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 AA  UU  GG  CC
+##### 1/2     A   U   A   U   G   G   A   A   U   U   G   G   C   C   U   U   A   A   U   C   A   G   2   2   1   1
+##### 1/2     1   2   1   2   3   3   1   1   2   2   3   3   4   4   2   2   1   1   2   4   1   3   2   2   1   1
 
 Where first column indicates the class 1 (Positive)or 2 (negative), followed by the miR and its 2w information.Before the actual training process all nucleotide where converted to number since strings can't be used for training. So we converted A as 1, U as 2, G as 3 and C as 4 and then followed by the 2w size. The last row indicates the actual training set used in LibSVM. Note: For LibSVM the corresponding csv file will be converted to libsvm ,(refer: csv2libsvm.py inlibSVM package). 
 
